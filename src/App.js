@@ -8,6 +8,23 @@ import Weather from "./components/Weather";
 const API_KEY = "47dfc9e97cd04b9f27681ca5d86fc375"
 
 class App extends React.Component {
+  // Initialize states
+
+  // These will be our features for our outfit-recommender algorithm
+  state = {
+    // INFORMATION
+    city: undefined,
+    country: undefined,
+
+    // FEATURES
+    temperature: undefined,
+    wind: undefined, // speed of wind
+    humidity: undefined,
+    description: undefined,
+    
+    // MISC.
+    error: undefined
+  }
   // Methods
   getWeather = async (e) => {
     e.preventDefault();
@@ -18,8 +35,31 @@ class App extends React.Component {
     const api_call = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`);
     // Convert to JSON format
     const data = await api_call.json();
-    console.log(data);
-    // Parse JSON into usable values
+    if (city && country) { // Checks that user has inputted values correctly
+      console.log(data);
+      // Parse JSON into usable values
+      this.setState({
+        city: data.name,
+        country: data.sys.country,
+
+        temperature: data.main.temp,
+        wind: data.wind.speed,
+        humidity: data.main.humidity,
+        description: data.weather[0].description,
+        error: ""
+      });
+    } else {
+      this.setState({
+        city: undefined,
+        country: undefined,
+
+        temperature: undefined,
+        wind: undefined,
+        humidity: undefined,
+        description: undefined,
+        error: "Please enter a city and country."
+      });
+    }
   }
 
   // Render
@@ -30,7 +70,16 @@ class App extends React.Component {
       <div> 
         <Titles></Titles>
         <Form getWeather={this.getWeather} />
-        <Weather />
+        <Weather 
+          city={this.state.city}
+          country={this.state.country}
+
+          temperature={this.state.temperature} 
+          wind={this.state.wind} 
+          humidity={this.state.humidity}
+          description={this.state.description}
+          error={this.state.error}
+        />
       </div>
     );
   }
