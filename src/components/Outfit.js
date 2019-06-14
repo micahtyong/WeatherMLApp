@@ -12,6 +12,10 @@ const network = new brain.NeuralNetwork();
 
 // Training with Data
 
+// Some notes
+
+// We need to do feature scaling or mean normalization and a hell of a lot more data. We also should test which features to keep and which to trade or discard.
+
 network.train([
   {input: {temperature: 18.31, humidity: 64, wind: 3}, output: {go_moderate_nude: 1}},
   {input: {temperature: 7, humidity: 81, wind: 3}, output: {go_eskimo: 1}},
@@ -32,4 +36,7 @@ network.train([
 
 const result = network.run({temperature: 29.43, humidity: 66, wind: 3.6});
 
+const outfit = Object.keys(result).reduce(function(a, b){ return result[a] > result[b] ? a : b});
+
 console.log(result);
+console.log(outfit);
