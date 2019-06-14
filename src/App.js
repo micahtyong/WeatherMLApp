@@ -12,19 +12,19 @@ const brain = require("brain.js");
 const network = new brain.NeuralNetwork();
 
 network.train([
-  {input: {temperature: 18.31, humidity: 64, wind: 3}, output: {go_moderate_nude: 1}},
-  {input: {temperature: 7, humidity: 81, wind: 3}, output: {go_eskimo: 1}},
-  {input: {temperature: 17.2, humidity: 48, wind: 7.2}, output: {go_comfort: 1}},
-  {input: {temperature: 26.52, humidity: 100, wind: 5.7}, output: {go_nude: 1}},
-  {input: {temperature: 9.64, humidity: 58, wind: 6.2}, output: {go_moderate_eskimo: 1}},
-  {input: {temperature: 17.48, humidity: 36, wind: 2}, output: {go_comfort: 1}},
-  {input: {temperature: 18.31, humidity: 64, wind: 4.6}, output: {go_comfort: 1}},
-  {input: {temperature: 17.61, humidity: 77, wind: 3.6}, output: {go_comfort: 1}},
-  {input: {temperature: 21.18, humidity: 72, wind: 3.1}, output: {go_moderate_nude: 1}},
-  {input: {temperature: 27.67, humidity: 74, wind: 2.6}, output: {go_nude: 1}},
-  {input: {temperature: 9.28, humidity: 70, wind: 1}, output: {go_moderate_eskimo: 1}},
-  {input: {temperature: 13.75, humidity: 66, wind: 4.1}, output: {go_moderate_eskimo: 1}},
-  {input: {temperature: 6.83, humidity: 93, wind: 5.7}, output: {go_eskimo: 1}},
+  {input: {temperature: (18.31 - 17) / 30, humidity: (64 - 65) / 100, wind: (3 - 3) / 10}, output: {go_moderate_nude: 1}},
+  {input: {temperature: (7 - 17) / 30, humidity: (81 - 65) / 100, wind: (3 - 3) / 10}, output: {go_eskimo: 1}},
+  {input: {temperature: (17.2 - 17) / 30, humidity: (48 - 65) / 100, wind: (7.2 - 3) / 10}, output: {go_comfort: 1}},
+  {input: {temperature: (26.52 - 17) / 30, humidity: (100 - 65) / 100, wind: (5.7 - 3) / 10}, output: {go_nude: 1}},
+  {input: {temperature: (9.64 - 17) / 30, humidity: (58 - 65) / 100, wind: (6.2 - 3) / 10}, output: {go_moderate_eskimo: 1}},
+  {input: {temperature: (17.48 - 17) / 30, humidity: (36 - 65) / 100, wind: (2 - 3) / 10}, output: {go_comfort: 1}},
+  {input: {temperature: (18.31 - 17) / 30, humidity: (64 - 65) / 100, wind: (4.6 - 3) / 10}, output: {go_comfort: 1}},
+  {input: {temperature: (17.61 - 17) / 30, humidity: (77 - 65) / 100, wind: (3.6 - 3) / 10}, output: {go_comfort: 1}},
+  {input: {temperature: (21.18 - 17) / 30, humidity: (72 - 65) / 100, wind: (3.1 - 3) / 10}, output: {go_moderate_nude: 1}},
+  {input: {temperature: (27.67 - 17) / 30, humidity: (74 - 65) / 100, wind: (2.6 - 3) / 10}, output: {go_nude: 1}},
+  {input: {temperature: (9.28 - 17) / 30, humidity: (70 - 65) / 100, wind: (1 - 3) / 10}, output: {go_moderate_eskimo: 1}},
+  {input: {temperature: (13.75 - 17) / 30, humidity: (66 - 65) / 100, wind: (4.1 - 3) / 10}, output: {go_moderate_eskimo: 1}},
+  {input: {temperature: (6.83 - 17) / 30, humidity: (93 - 65) / 100, wind: (5.7 - 3) / 10}, output: {go_eskimo: 1}}
 ]);
 
 class App extends React.Component {
@@ -83,7 +83,7 @@ class App extends React.Component {
           description: data.weather[0].description,
           // outfit: "Dress comfortably",
           // We're gonna have to change this because of how unacceptably ugly this is but we just need a quick solution for now. 
-          outfit: Object.keys(network.run({temperature: parseFloat(data.main.temp), humidity: parseFloat(data.main.humidity), wind: parseFloat(data.wind.speed)})).reduce(function(a, b){ return network.run({temperature: parseFloat(data.main.temp), humidity: parseFloat(data.main.humidity), wind: parseFloat(data.wind.speed)})[a] > network.run({temperature: parseFloat(data.main.temp), humidity: parseFloat(data.main.humidity), wind: parseFloat(data.wind.speed)})[b] ? a : b}),
+          outfit: Object.keys(network.run({temperature: (parseFloat(data.main.temp) - 17) / 30, humidity: (parseFloat(data.main.humidity) - 65) / 100, wind: (parseFloat(data.wind.speed) - 3) / 10})).reduce(function(a, b){ return network.run({temperature: (parseFloat(data.main.temp) - 17) / 30, humidity: (parseFloat(data.main.humidity) - 65) / 100, wind: (parseFloat(data.wind.speed) - 3) / 10})[a] > network.run({temperature: (parseFloat(data.main.temp) - 17) / 30, humidity: (parseFloat(data.main.humidity) - 65) / 100, wind: (parseFloat(data.wind.speed) - 3) / 10})[b] ? a : b}),
           error: ""
         });
       }
