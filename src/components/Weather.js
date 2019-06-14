@@ -1,5 +1,20 @@
 import React from "react";
 
+function convertToOutfit(decision) {
+    if (decision === 'go_eskimo') {
+        return 'Dress ››like an Eskimo!'
+    } else if (decision === 'go_moderate_eskimo') {
+        return 'Wear several layers.'
+    } else if (decision === 'go_comfort') {
+        return 'Great weather. Dress comfortably!'
+    } else if (decision === 'go_moderate_nude') {
+        return 'Shirt and pants will do.'
+    } else if (decision === 'go_nude') {
+        return 'Wear as little as possible'
+    } else {
+        return 'Error.'
+    }
+}
 
 const Weather = props => (
     <div className="weather__info">
@@ -30,7 +45,7 @@ const Weather = props => (
         }
         { 
             props.outfit && <p className="weather__key">Outfit: 
-                <span className="weather__value"> { props.outfit }</span>
+                <span className="weather__value"> { convertToOutfit(props.outfit) }</span>
             </p>
         }
         { 
