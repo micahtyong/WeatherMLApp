@@ -1,6 +1,6 @@
 ## Weather / Outfit Recommender Application ##
 
-<img src = "demo/Overview.png" width = "500">
+<img src = "demo/Over.png" width = "500">
 
 Uses the OpenWeatherMap API to fetch weather data and Brain.js to recommend an outfit type to the user. 
 
